@@ -285,10 +285,32 @@ class FileStorageTest {
         assertTrue(fines.get(0).isPaid());
     }
 
+    @Test
+    void saveAndLoadLibrarians_roundTrip() {
+        FileStorage storage = newStorage();
+        List<Librarian> librarians = List.of(
+                new Librarian("L1", "LibName", "lib@test.com", "libpass")
+        );
 
+        storage.saveLibrarians(librarians);
+        List<Librarian> loaded = storage.loadLibrarians();
 
+        assertEquals(1, loaded.size());
+        assertEquals("L1", loaded.get(0).getId());
+        assertEquals("LibName", loaded.get(0).getName());
+        assertEquals("lib@test.com", loaded.get(0).getEmail());
+    }
 
+    @Test
+    void loadLoans_withCDMediaType() throws IOException {
+        Path f = tempDir.resolve("loans.txt");
+        Files.writeString(f, "L1;U1;C1;2024-01-01;2024-01-08;;CD");
 
+        FileStorage storage = newStorage();
+        List<Loan> loans = storage.loadLoans();
 
+        assertEquals(1, loans.size());
+        assertEquals(MediaType.CD, loans.get(0).getMediaType());
+    }
 
 }

@@ -260,4 +260,62 @@ class LoanServiceTest {
         loanService.returnBook("L3");
         assertFalse(loanService.hasActiveLoans("U2"));
     }
+
+    /**
+     * Tests that returning an already-returned loan does nothing.
+     */
+    @Test
+    void returnBook_whenAlreadyReturned_doesNothing() {
+        Loan loan = loanService.borrowBook("U1", "B1");
+        loanService.returnBook(loan.getId());
+        
+        // Return again - should not throw
+        loanService.returnBook(loan.getId());
+        
+        List<Loan> loans = storage.loadLoans();
+        assertTrue(loans.get(0).isReturned());
+    }
+
+    /**
+     * Tests getAllLoans returns all loans.
+     */
+    @Test
+    void getAllLoans_returnsAllStoredLoans() {
+        loanService.borrowBook("U1", "B1");
+        loanService.borrowCd("U2", "CD1");
+        
+        List<Loan> allLoans = loanService.getAllLoans();
+        
+        assertEquals(2, allLoans.size());
+    }
+
+    /**
+     * Tests getLoansForUser returns only loans for specific user.
+     */
+    @Test
+    void getLoansForUser_returnsOnlyUserLoans() {
+        loanService.borrowCd("U1", "CD1");
+        loanService.borrowCd("U2", "CD2");
+        loanService.borrowCd("U1", "CD3");
+        
+        List<Loan> u1Loans = loanService.getLoansForUser("U1");
+        
+        assertEquals(2, u1Loans.size());
+    }
+
+    /**
+     * Tests hasActiveLoans returns false for user with no loans.
+     */
+    @Test
+    void hasActiveLoans_whenUserHasNoLoans_returnsFalse() {
+        assertFalse(loanService.hasActiveLoans("U999"));
+    }
+
+    /**
+     * Tests hasOverdueLoans returns false for user with no loans.
+     */
+    @Test
+    void hasOverdueLoans_whenUserHasNoLoans_returnsFalse() {
+        assertFalse(loanService.hasOverdueLoans("U999"));
+    }
 }
