@@ -427,11 +427,28 @@ public class FileStorage {
     }
 
     /**
-     * Saves librarians list (currently empty implementation).
+     * Saves librarians list to librarians.txt.
      *
      * @param librarians list of librarians
      */
     public void saveLibrarians(List<Librarian> librarians) {
-
+        List<String> lines = new ArrayList<>();
+        for (Librarian l : librarians) {
+            String line = String.join(";",
+                    l.getId(),
+                    l.getName(),
+                    l.getEmail(),
+                    l.getPassword()
+            );
+            lines.add(line);
+        }
+        try {
+            Files.createDirectories(baseDir);
+            Files.write(librariansFile(), lines,
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.TRUNCATE_EXISTING);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to save librarians", e);
+        }
     }
 }
