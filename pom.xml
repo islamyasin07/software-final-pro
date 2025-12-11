@@ -4,9 +4,13 @@
     <artifactId>library-sys</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <properties>
-        <!-- Set Java 21 as the target release -->
-        <maven.compiler.release>21</maven.compiler.release>
+        <!-- Set Java 11 as the target release -->
+        <maven.compiler.release>11</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+        <sonar.jacoco.reportPath>${project.basedir}/target/jacoco.exec</sonar.jacoco.reportPath>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     </properties>
     <dependencies>
         <!-- JUnit 5 -->
@@ -40,14 +44,6 @@
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>22.0.2</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>5.9.3</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -114,7 +110,7 @@
                         <configuration>
                             <rules>
                                 <requireJavaVersion>
-                                    <version>21</version>
+                                    <version>11</version>
                                 </requireJavaVersion>
                             </rules>
                             <fail>true</fail>
@@ -123,17 +119,11 @@
                 </executions>
             </plugin>
 
-
+            <!-- SonarQube Scanner Plugin -->
             <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.11</version>
-                <configuration>
-                    <excludes>
-                        <exclude>**/presentation/*</exclude>
-                        <exclude>**/presentation/**/*</exclude>
-                    </excludes>
-                </configuration>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.9.1.2184</version>
             </plugin>
 
         </plugins>

@@ -87,17 +87,11 @@ public class FineService {
         double total = 0.0;
 
         for (Fine f : storage.loadFines()) {
-            System.out.println("checking fine: id=" + f.getId()
-                    + ", userId=[" + f.getUserId() + "]"
-                    + ", amount=" + f.getAmount()
-                    + ", paid=" + f.isPaid());
-
             if (f.getUserId().trim().equals(userId.trim()) && !f.isPaid()) {
                 total += f.getAmount();
             }
         }
 
-        System.out.println("total outstanding = " + total);
         return total;
     }
 

@@ -55,7 +55,7 @@ public class LoanService {
     public List<Loan> getLoansForUser(String userId) {
         return storage.loadLoans().stream()
                 .filter(l -> l.getUserId().equals(userId))
-                .toList();
+                .collect(java.util.stream.Collectors.toList());
     }
 
     /**

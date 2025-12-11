@@ -237,7 +237,7 @@ class UserServiceTest {
 
     @Test
     void unregisterUser_whenRemovingLoggedInUser_logsOut() {
-        User u = userService.register("Lana", "lana@mail.com", VALID_PASSWORD);
+        assertNotNull(userService.register("Lana", "lana@mail.com", VALID_PASSWORD));
         userService.login("lana@mail.com", VALID_PASSWORD);
 
         storage.saveLoans(List.of());

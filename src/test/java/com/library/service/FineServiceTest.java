@@ -189,12 +189,12 @@ class FineServiceTest {
     @Test
     void payFine_skipsOtherUsersAndPaidFines() {
         fineService.createFine("U1", 30.0);
-        Fine f2 = fineService.createFine("U2", 50.0);
+        fineService.createFine("U2", 50.0);
         Fine f3 = fineService.createFine("U1", 40.0);
         f3.setPaid(true);
         storage.saveFines(storage.loadFines());
 
-        double result = fineService.payFine("U1", 10);
+        fineService.payFine("U1", 10);
 
         // Only fine 1 should be reduced
         List<Fine> fines = storage.loadFines();

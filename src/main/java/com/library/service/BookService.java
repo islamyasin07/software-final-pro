@@ -5,7 +5,6 @@ import com.library.domain.FileStorage;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Provides operations for managing books in the library system.

@@ -118,6 +118,9 @@ public class ConsoleMenu {
                     handleUnregisterUser();
                     break;
                 case "13":
+                    handleViewMyLoans();
+                    break;
+                case "14":
                     System.out.println("Exiting... Goodbye!");
                     running = false;
                     break;
@@ -150,7 +153,8 @@ public class ConsoleMenu {
         System.out.println("10. Pay fine");
         System.out.println("11. Send overdue reminders");
         System.out.println("12. Unregister user (admin only)");
-        System.out.println("13. Exit");
+        System.out.println("13. View my loans (user only)");
+        System.out.println("14. Exit");
         System.out.print("Choose option: ");
     }
 
