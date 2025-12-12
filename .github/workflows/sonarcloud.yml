@@ -37,6 +37,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        working-directory: ./software
         run: |
           mvn clean verify sonar:sonar \
             -Dsonar.projectKey=islamyasin07_software-final-pro \
